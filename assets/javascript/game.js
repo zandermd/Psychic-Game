@@ -1,62 +1,61 @@
-//computer choices
-var psychicLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",];
+//computer choices & user varibles
+var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",];
 
-//user varibles
-var yourWins = 1;
-var yourLosses = 0;
-var guessesLeft = 10;
-var playerChoice = "";
-var lettersGuessed = [];
+	var wins = 0;
+	var losses = 0;
+	var numGuesses = 10;
+	var guessChoices = [];
 
-//generate random letter by the computer
-var ranLetter = psychicLetters[Math.floor(Math.random() * psychicLetters.length)];
-console.log(ranLetter)
+//make key event 
+document.onkeyup = function(event) {
 
-//new guesses
-function newGuess() {
-    playerChoice = "";
-    lettersGuessed = [];
-    guessesLeft = 10;
-    ranLetter = psychicLetters[Math.floor(Math.random() * psychicLetters.length)];
-    document.getElementById('playerChoice').innerHTML = ('');
-    console.log('compGuess');
-}
+    var userGuess = event.key;
 
-//log users input, make click event
-document.onkeyup = function (event) {
-    var playerChoice = event.key;
-    console.log('guesses');
-}
+    var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
 
-if (guessesLeft > 0) {
+    var options = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",];
+    
+//if statements (if user guesses correctly, if guesses incorrectly, number of guesses for user)
+   
+//if user guesses wrong, deduct a turn
+if (options.indexOf(userGuess) > -1) {
 
-    //if player makes correct guess, log the win
-    if (playerChoice == psychicLetters) {
-        alert("Can you guess the right letter?")
-        document.getElementById('wins').innerHTML = (yourWins);
-        (yourWins += 1);
-        newGuess();
-        console.log('comp');
-    }
+        //if user guesses correctly/make alert   
+       if (userGuess === computerGuess) {
+           alert ('You are psychic!')
+           wins++;
+           numGuesses = 10;
+           guessChoices = [];
+       }
 
-    //if player makes wrong guess, log the loss
-    if (playerChoice != psychicLetters) {
-        console.log('correct');
+       //if user guesses incorrectly/make alert
+       if (userGuess != computerGuess) {
+           alert ('You are not psychic!')
+           numGuesses --;
+           guessChoices.push(userGuess);
+       }
 
-        document.getElementById('guessesLeft').innerHTML = guessesLeft;
-        lettersGuessed.push('playerChoice');
-        joinArray = lettersGuessed.join(',');
-        document.getElementById('playerChoice').innerHTML = joinArray;
-        console.log('test');
+       //when number of guesses reaches 0, reset game and add a loss
+       if (numGuesses === 0) {
 
-        if (guessesLeft === 0) {
-            alert("You lose!");
-            losses += 1;
-            document.getElementById('yourLosses').innerHTML = yourLosses;
-            newGuess();
-            console.log('COMP GUESS');
+       numGuesses = 10;
+       losses ++;
+       guessChoices = [];
 
-        }
+       
+   }
 
-    }
-}
+   //html connections 
+   var html = 
+   "<h1> The Psychic Game </h1>" +
+   "<p>Guess what letter I'm thinking of!</p>" +
+   "<p>Wins: " + wins + "</p>" +
+   "<p>Losses: " + losses + "</p>" +
+   "<p>Guesses Left: " + numGuesses + "</p>" +
+   "<p>Your Guesses so far: " + guessChoices.join(", ") + "</p>";
+
+   document.querySelector("#game").innerHTML = html;
+
+   
+   }
+};

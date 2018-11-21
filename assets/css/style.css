@@ -1,1 +1,18 @@
+#game {
+text-decoration-color: white;
+padding: 250px;
+font-style: italic;
+font-family: fantasy;
+font-size: 20px;
+}
 
+body, html {
+    height: 100%;
+    margin: 0;
+    background-image: url("https://image.freepik.com/free-vector/blue-abstract-background-with-mandalas_1159-956.jpg");
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+}
